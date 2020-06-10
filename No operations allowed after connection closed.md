@@ -3,4 +3,5 @@
 Failed to validate connection com.mysql.jdbc.JDBC4Connection@375a8ff3 (No operations allowed after connection closed.)
 ```
 解决方法:<br>
+https://blog.csdn.net/itguangit/article/details/79178155<br>
 https://blog.csdn.net/crystalqy/article/details/90479128
