@@ -1,0 +1,27 @@
+设置多数据源，A数据源连接A库，B数据源连接B库，结果出现在A数据源连接B库，B数据源连接A库的情况，问题出现在注释掉的那条语句上,<br>
+由于使用的是默认的配置导致它把两个数据源串联起来了，然后注入的时候就出错了（leader是这样告诉我的，虽然我并没有听的太明白。。。。）
+```
+@Configuration
+@MapperScan(basePackages = "com.baidu.bizcrm.bizcrmprism.event.dao.report",
+        sqlSessionFactoryRef = "reportSqlSessionFactory")
+public class ReportDataSourceConfig {
+    @Primary
+    @Bean(name = "reportDataSource")
+    @ConfigurationProperties("spring.datasource.report")
+    public DataSource masterDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "reportSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("reportDataSource") DataSource dataSource,
+            MybatisProperties mybatisProperties)
+            throws Exception {
+        SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+        sessionFactoryBean.setDataSource(dataSource);
+        sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources("classpath:mapper/report/*.xml"));
+//        sessionFactoryBean.setConfiguration(mybatisProperties.getConfiguration());
+        return sessionFactoryBean.getObject();
+    }
+}
+```
