@@ -1,0 +1,20 @@
+**建议安装maven helper插件查看项目中是否存在jar包冲突问题**
+jar包冲突解决方式，eg:
+```
+<dependency>
+    <groupId>com.baidu.cscloud</groupId>
+    <artifactId>spring-boot-starter-databus</artifactId>
+    <version>${cloudlet.parent.version}</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>spring-boot-starter-new-skyroad</artifactId>
+            <groupId>com.baidu.cscloud</groupId>
+        </exclusion>
+        <exclusion>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+```
+**可能引起ClassNotFoundException**
